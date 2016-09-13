@@ -74,6 +74,11 @@ public class Game {
                 player.addCredit(player.getCurrentBet()*2);
                 dealerWon = false;
             }
+            if (player.isRoundDraw() && player.getID() != 0){
+                IOHandler.displayDraw(player, dealer);
+                player.addCredit(player.getCurrentBet());
+                dealerWon = false;
+            }
         }
         if(dealerWon) //If no one beat the dealer
             IOHandler.displayDealerWon(dealer);

@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import cards.Deck;
 import  player.Player;
@@ -12,6 +13,7 @@ import player.Table;
  */
 
  class IOHandler {
+    Random rand = new Random();
     private Scanner reader = new Scanner(System.in);
     private ArrayList<String> colorText = new ArrayList<>();
 
@@ -44,7 +46,11 @@ import player.Table;
             System.out.println(colorText.get(2)+"No winners, dealer beats all with: " + dealer.getHand().getCardValues() +colorText.get(0));
     }
     void displayWinner(Player player, Dealer dealer){
-        System.out.println(colorText.get(4)+"Winner is: Player " + player.getID() +" against dealer: " + dealer.getHand().getCardValues() +colorText.get(0));
+        System.out.println(colorText.get(4)+"Player " + player.getID() +" wins with: " + player.getHand().getCardValues() +" against dealer: " + dealer.getHand().getCardValues() +colorText.get(0));
+    }
+
+    void displayDraw(Player player, Dealer dealer){
+        System.out.println(colorText.get(4)+"Player " + player.getID() +" draws with: " + player.getHand().getCardValues() +" against dealer: " + dealer.getHand().getCardValues() +colorText.get(0));
     }
 
     void displayPlayerBust(Player player){
@@ -69,12 +75,12 @@ import player.Table;
     }
 
     void displayDealerBust(){
-        System.out.println(colorText.get(4)+"Dealer bust, evryone wins" +colorText.get(0));
+        System.out.println(colorText.get(4)+"Dealer bust, everyone wins" +colorText.get(0));
     }
 
     void displayHand(Player player){
 
-        System.out.println(colorText.get(player.getID()+1)+ "---------|Player "+player.getID()+ "|---------"+colorText.get(0));
+        System.out.println(colorText.get(7)+ "---------|Player "+player.getID()+ "|---------"+colorText.get(0));
         System.out.println("---------|Cards in hand|-------");
         for(int i =0; i < player.getHand().getNoOfCards(); i++){
             System.out.println(player.getHand().getCard(i).getRank() + " OF " + player.getHand().getCard(i).getSuit() );
@@ -88,23 +94,27 @@ import player.Table;
                 System.out.println("No players left game ending...");
                 return false;
             }
-            System.out.println("Continue game? Yes(1) No(0)?");
+            System.out.println("Continue game? Yes(1) No(0)? Add a new player(2)");
             int n = getInt();
             if (n == 0)
                 return false;
             if (n == 1) {
                 for(int i = 0; i < 20; i++)
                     System.out.println("");
-
                 return true;
             }
+            if(n == 2)
+                if(table.addPlayer())
+                    System.out.println("New player added");
+                else
+                    System.out.println("Table is full");
         }
     }
 
     void displayFinalScores(ArrayList<Player> table){
         for (Player player: table) {
             if(player.getID() != 0) //Dealers score doesnt matter
-            System.out.println("Player " + player.getID() +" score: " +player.getCredit() );
+            System.out.println("Table closing... Player " + player.getID() +" final credit: " +player.getCredit() );
         }
     }
 

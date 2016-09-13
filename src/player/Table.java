@@ -50,6 +50,18 @@ public class Table{
         return table;
     }
 
+    public  boolean  addPlayer(){
+        if(table.size() > 7)
+            return false;
+
+        Player player = new Player(table.get(table.size()-1).getID()+1);
+        player.addCredit(startCredit);
+        table.add(player);
+        return true;
+
+
+    }
+
     public void checkCredit(){
         for (Iterator<Player> iterator = table.iterator(); iterator.hasNext();) {
             Player player = iterator.next();
@@ -63,6 +75,8 @@ public class Table{
         for (Player player: table){
             if(player.getHand().getCardValues() > dealer.getHand().getCardValues() && player.getHand().getCardValues() < 22 || dealer.getHand().getCardValues() > 21 && player.getHand().getCardValues() < 22)
                 player.setRoundWinner(true);
+            if(player.getHand().getCardValues() == dealer.getHand().getCardValues() && dealer.getHand().getCardValues()<22)
+                player.setRoundDraw(true);
         }
     }
 
@@ -77,6 +91,7 @@ public class Table{
         dealer.resetRound();
         for (Player player: table) {
             player.setRoundWinner(false);
+            player.setRoundDraw(false);
             for(int i=0; i < firstAmountOfCards;i++ ) {
                 player.getHand().addCard(deck.dealCard());
             }

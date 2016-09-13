@@ -9,6 +9,7 @@ public class Player {
     private int currentBet;
     private int ID;
     private boolean roundWinner;
+    private boolean roundDraw;
     private Hand hand;
 
     public Player(int i){
@@ -16,6 +17,7 @@ public class Player {
         credit = 0;
         hand = new Hand();
         roundWinner = false;
+        roundDraw = false;
     }
 
 
@@ -48,5 +50,13 @@ public class Player {
 
     public void setRoundWinner(boolean roundWinner) {
         this.roundWinner = roundWinner;
+    }
+
+    public boolean isRoundDraw() {
+        return roundDraw;
+    }
+
+    public void setRoundDraw(boolean roundDraw) {
+        this.roundDraw = roundDraw;
     }
 }
