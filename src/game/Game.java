@@ -54,7 +54,7 @@ public class Game {
 
 
     private void dealerPlay(){
-        while(dealer.getHand().getCardValues() < 16 ){ //Only draw on 16 or less (standard blackjack rules)
+        while(dealer.getHand().getCardValues() < 17 ){ //Only draw on 16 or less (standard blackjack rules)
             dealCard(dealer);
             IOHandler.displayDealer(dealer);
             if(dealer.checkLoseCondition()){
@@ -75,7 +75,7 @@ public class Game {
                 dealerWon = false;
             }
         }
-        if(dealerWon) //If everyone went over 21
+        if(dealerWon) //If no one beat the dealer
             IOHandler.displayDealerWon(dealer);
     }
 

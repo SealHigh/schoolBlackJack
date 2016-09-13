@@ -42,18 +42,6 @@ public class Table{
         }
     }
 
-    public Player getCurrentLeader(){
-        int tempScore = 0;
-        Player tempPlayer = dealer;
-        for (Player player: table)
-        {
-            if(tempScore < player.getHand().getCardValues() && player.getHand().getCardValues() <22 && player != dealer){
-                tempScore = player.getHand().getCardValues();
-                tempPlayer = player;
-            }
-        }
-        return tempPlayer;
-    }
 
     public Dealer getDealer(){
         return dealer;
@@ -61,17 +49,6 @@ public class Table{
     public ArrayList<Player> getTable(){
         return table;
     }
-
-    public void removePlayer(Player player){
-        for(int i = 0; i < table.size(); i++){
-            if(player == table.get(i)){
-                table.remove(i);
-                break;
-            }
-        }
-
-    }
-
 
     public void checkCredit(){
         for (Iterator<Player> iterator = table.iterator(); iterator.hasNext();) {
