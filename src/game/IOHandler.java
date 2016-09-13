@@ -40,12 +40,8 @@ import player.Table;
         return n;
     }
 
-    void displayDealerWon(Dealer dealer, Player player){
-        if(player.getID() == 0)
-            System.out.println(colorText.get(2)+"Dealer won" +colorText.get(0));
-        else
-            System.out.println(colorText.get(2)+"Dealer won with: " + dealer.getHand().getCardValues() +" against Player "+ player.getID()+": " + player.getHand().getCardValues() +colorText.get(0));
-
+    void displayDealerWon(Dealer dealer){
+            System.out.println(colorText.get(2)+"No winners, dealer beats all with: " + dealer.getHand().getCardValues() +colorText.get(0));
     }
     void displayWinner(Player player, Dealer dealer){
         System.out.println(colorText.get(4)+"Winner is: Player " + player.getID() +" against dealer: " + dealer.getHand().getCardValues() +colorText.get(0));
@@ -72,6 +68,10 @@ import player.Table;
             }
     }
 
+    void displayDealerBust(){
+        System.out.println(colorText.get(4)+"Dealer bust, evryone wins" +colorText.get(0));
+    }
+
     void displayHand(Player player){
 
         System.out.println(colorText.get(player.getID()+1)+ "---------|Player "+player.getID()+ "|---------"+colorText.get(0));
@@ -93,13 +93,9 @@ import player.Table;
             if (n == 0)
                 return false;
             if (n == 1) {
-                try {
-                    Runtime.getRuntime().exec("cls");
-                }
-                catch (final Exception e)
-                {
-                    System.out.println("Couldn't clear screen");
-                }
+                for(int i = 0; i < 20; i++)
+                    System.out.println("");
+
                 return true;
             }
         }
@@ -112,18 +108,21 @@ import player.Table;
         }
     }
 
-    void getBetAction(Player player){
+    boolean getBetAction(Player player){
         System.out.println(colorText.get(4) + "Player: " + player.getID() +" current balance: " + player.getCredit()+colorText.get(0));
         int n  = 0;
         while(n<100 || n>2000 || n > player.getCredit()) {
-            System.out.println("How much do you want to bet? (Minimum 100, Maxiumum 2000)");
+            System.out.println("How much do you want to bet? (Minimum 100, Maxiumum 2000) Enter 0 to leave table");
             n = getInt();
+            if (n == 0)
+                return false;
             if(n>player.getCredit())
                 System.out.println("Can't bet more than you have in balance");
         }
         player.setCurrentBet(n);
         player.subtractCredit(n);
         System.out.println(colorText.get(4)+"Current balance: " + player.getCredit()+colorText.get(0));
+        return true;
     }
 
     boolean getAction(Player player, Deck deck) {

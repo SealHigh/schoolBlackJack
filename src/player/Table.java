@@ -45,7 +45,6 @@ public class Table{
     public Player getCurrentLeader(){
         int tempScore = 0;
         Player tempPlayer = dealer;
-
         for (Player player: table)
         {
             if(tempScore < player.getHand().getCardValues() && player.getHand().getCardValues() <22 && player != dealer){
@@ -63,12 +62,30 @@ public class Table{
         return table;
     }
 
+    public void removePlayer(Player player){
+        for(int i = 0; i < table.size(); i++){
+            if(player == table.get(i)){
+                table.remove(i);
+                break;
+            }
+        }
+
+    }
+
+
     public void checkCredit(){
         for (Iterator<Player> iterator = table.iterator(); iterator.hasNext();) {
             Player player = iterator.next();
             if (player.getCredit() < 200) {
                 iterator.remove();
             }
+        }
+    }
+
+    public void getWinners(){
+        for (Player player: table){
+            if(player.getHand().getCardValues() > dealer.getHand().getCardValues() && player.getHand().getCardValues() < 22 || dealer.getHand().getCardValues() > 21 && player.getHand().getCardValues() < 22)
+                player.setRoundWinner(true);
         }
     }
 
@@ -82,6 +99,7 @@ public class Table{
         deck.shuffleCards();
         dealer.resetRound();
         for (Player player: table) {
+            player.setRoundWinner(false);
             for(int i=0; i < firstAmountOfCards;i++ ) {
                 player.getHand().addCard(deck.dealCard());
             }

@@ -4,6 +4,8 @@ import player.Player;
 import cards.Deck;
 import player.Table;
 
+import java.util.Iterator;
+
 /**
  * Created by Martin on 2016-09-10.
  */
@@ -27,14 +29,16 @@ public class Game {
 
 
     private void checkAction(){
-        for (Player player: table.getTable()) // All players bets and plays
+        for (Iterator<Player> iterator = table.getTable().iterator(); iterator.hasNext();)  //Allows removal in list while iterating
         {
+            Player player = iterator.next();
             boolean n = true;
             if (player.getID() == 0) //Dealer doesn't play
                 n = false;
-            else
-                IOHandler.getBetAction(player);
-
+            else if (!IOHandler.getBetAction(player)) { //If player wants to leave
+                n = false;
+                iterator.remove();
+            }
             while (n) {
                 IOHandler.displayHand(player);
                 n = IOHandler.getAction(player, deck);
@@ -49,28 +53,30 @@ public class Game {
     }
 
 
-    private boolean dealerAI(Player winner){
-        while(dealer.getHand().getCardValues() <= winner.getHand().getCardValues() && dealer.getHand().getCardValues() != 21){
+    private void dealerPlay(){
+        while(dealer.getHand().getCardValues() < 16 ){ //Only draw on 16 or less (standard blackjack rules)
             dealCard(dealer);
             IOHandler.displayDealer(dealer);
             if(dealer.checkLoseCondition()){
-                IOHandler.displayWinner(winner,dealer);
-                return false;
+                IOHandler.displayDealerBust();
             }
         }
-            IOHandler.displayDealerWon(dealer,winner);
-            return true;
     }
 
 
     private void handleWinner(){
-        Player winner = table.getCurrentLeader(); //See who is in the lead
-        if(winner == dealer) //If everyone went over 21
-            IOHandler.displayDealerWon(dealer,winner);
-        else {
-            if (!dealerAI(winner)) //Let dealer play til it beats all players or go over 21 and loses
-                winner.addCredit(winner.getCurrentBet()*2); //Double players bet
+        boolean dealerWon = true;
+        table.getWinners();
+        for (Player player: table.getTable()
+             ) {
+            if(player.isRoundWinner() && player.getID() != 0) {
+                IOHandler.displayWinner(player, dealer);
+                player.addCredit(player.getCurrentBet()*2);
+                dealerWon = false;
+            }
         }
+        if(dealerWon) //If everyone went over 21
+            IOHandler.displayDealerWon(dealer);
     }
 
     public void startGame() {
@@ -82,6 +88,7 @@ public class Game {
             IOHandler.displayDealer(dealer);
             checkAction();
             table.checkCredit(); // Make sure all players have credit left, if not remove them
+            dealerPlay();
             handleWinner();
 
             if(IOHandler.continueGame(table)) //Check if game should continue

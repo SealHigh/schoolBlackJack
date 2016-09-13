@@ -8,13 +8,17 @@ public class Player {
     private int credit;
     private int currentBet;
     private int ID;
+    private boolean roundWinner;
     private Hand hand;
 
     public Player(int i){
         ID = i;
         credit = 0;
         hand = new Hand();
+        roundWinner = false;
     }
+
+
 
     public Hand getHand(){
         return hand;
@@ -36,5 +40,13 @@ public class Player {
         if(hand.getCardValues() > 21)
             return true;
         return false;
+    }
+
+    public boolean isRoundWinner() {
+        return roundWinner;
+    }
+
+    public void setRoundWinner(boolean roundWinner) {
+        this.roundWinner = roundWinner;
     }
 }
