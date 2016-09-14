@@ -7,10 +7,7 @@ import java.util.Collections;
  * Created by Martin on 2016-09-09.
  */
 public class Deck {
-
-    Card card;
     ArrayList<Card> CardDeck = new ArrayList<>();
-
 
     public Deck(){
         fillDeck();
@@ -35,7 +32,7 @@ public class Deck {
         CardDeck.clear();
         for (Suit suit : Suit.values())
             for(Rank rank : Rank.values()) {
-                card = new Card(rank, suit);
+                Card card = new Card(rank, suit);
                 CardDeck.add(card);
             }
 

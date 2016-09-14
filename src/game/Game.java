@@ -13,18 +13,15 @@ public class Game {
 
     private IOHandler IOHandler;
     private Table table;
-    private Dealer dealer;
-    private Deck deck;
+
 
     public Game(){
         table = new Table();
-        deck = table.getDeck();
-        dealer = table.getDealer();
         IOHandler = new IOHandler();
     }
 
     private void dealCard(Player player){
-        player.getHand().addCard(deck.dealCard());
+        player.getHand().addCard(table.getDeck().dealCard());
     }
 
 
@@ -45,7 +42,7 @@ public class Game {
             }
             while (n) {
                 IOHandler.displayHand(player);
-                n = IOHandler.getAction(player, deck);
+                n = IOHandler.getAction(player, table.getDeck());
 
                 if (player.checkLoseCondition()) { //If player busts display it and end players turn
                     IOHandler.displayHand(player);
@@ -62,10 +59,10 @@ public class Game {
          * Dealer draws card until he has 17 or more
          * this is standard blackjack rules.
          */
-        while(dealer.getHand().getCardValues() < 17 ){
-            dealCard(dealer);
-            IOHandler.displayDealer(dealer);
-            if(dealer.checkLoseCondition()){
+        while(table.getDealer().getHand().getCardValues() < 17 ){
+            dealCard(table.getDealer());
+            IOHandler.displayDealer(table.getDealer());
+            if(table.getDealer().checkLoseCondition()){
                 IOHandler.displayDealerBust();
             }
         }
@@ -83,18 +80,18 @@ public class Game {
         for (Player player: table.getTable()
              ) {
             if(player.isRoundWinner() && player.getID() != 0) {
-                IOHandler.displayWinner(player, dealer);
+                IOHandler.displayWinner(player, table.getDealer());
                 player.addCredit(player.getCurrentBet()*2);
                 dealerWon = false;
             }
             if (player.isRoundDraw() && player.getID() != 0){
-                IOHandler.displayDraw(player, dealer);
+                IOHandler.displayDraw(player, table.getDealer());
                 player.addCredit(player.getCurrentBet());
                 dealerWon = false;
             }
         }
         if(dealerWon) //If no one beat the dealer
-            IOHandler.displayDealerWon(dealer);
+            IOHandler.displayDealerWon(table.getDealer());
     }
 
     public void startGame() {
@@ -108,7 +105,7 @@ public class Game {
         table.initTable(j);
 
         while (true) {
-            IOHandler.displayDealer(dealer); //Show dealers initial hand
+            IOHandler.displayDealer(table.getDealer()); //Show dealers initial hand
             checkAction();  //Check what each player wants to do
             dealerPlay();
             handleWinner();

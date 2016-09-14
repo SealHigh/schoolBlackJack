@@ -5,11 +5,11 @@ import  game.Game;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        printTest();
+    public static void main() {
+        startGame();
     }
 
-    private  static  void printTest(){
+    private  static  void startGame(){
         Game game = new Game();
         game.startGame();
 
