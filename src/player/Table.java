@@ -33,7 +33,7 @@ public class Table{
         }
         for (Player player: table)
         {
-            for(int i = 0; i <2; i++)
+            for(int i = 0; i <firstAmountOfCards; i++)
                 player.getHand().addCard(deck.dealCard());
         }
         for (Player player: table)
