@@ -59,7 +59,7 @@ public class Game {
          * Dealer draws card until he has 17 or more
          * this is standard blackjack rules.
          */
-        while(table.getDealer().getHand().getCardValues() < 17 ){
+        while(table.getDealer().getHand().getCardValues() < 17 && table.getTable().size()>1 ){
             dealCard(table.getDealer());
             IOHandler.displayDealer(table.getDealer());
             if(table.getDealer().checkLoseCondition()){
@@ -90,8 +90,18 @@ public class Game {
                 dealerWon = false;
             }
         }
-        if(dealerWon) //If no one beat the dealer
+        if(dealerWon && table.getTable().size() > 1) //If no one beat the dealer
             IOHandler.displayDealerWon(table.getDealer());
+    }
+
+    private boolean handleEndOfGame(){
+        if(IOHandler.continueGame(table)) //Check if game should continue
+            table.resetTable();
+        else {
+            IOHandler.displayFinalScores(table.getTable()); //Print out final credits
+            return true;
+        }
+        return false;
     }
 
     public void startGame() {
@@ -103,7 +113,6 @@ public class Game {
          */
         int j = IOHandler.getNoPlayers();
         table.initTable(j);
-
         while (true) {
             IOHandler.displayDealer(table.getDealer()); //Show dealers initial hand
             checkAction();  //Check what each player wants to do
@@ -111,12 +120,8 @@ public class Game {
             handleWinner();
             table.checkCredit(); // Make sure all players have credit left, if not remove them
 
-            if(IOHandler.continueGame(table)) //Check if game should continue
-                table.resetTable();
-            else {
-                IOHandler.displayFinalScores(table.getTable()); //Print out final credits
+            if(handleEndOfGame()) //If we want to quit break
                 break;
-            }
         }
     }
 }

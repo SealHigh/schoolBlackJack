@@ -86,26 +86,26 @@ import player.Table;
         System.out.println(colorText.get(5)+"Total card value: " + player.getHand().getCardValues()+colorText.get(0));
     }
 
+
+
     boolean continueGame(Table table){
         while(true){
-            if(table.getSize() < 2){
-                System.out.println("No players left at table, game ended...");
-                return false;
-            }
             System.out.println("Continue game? Yes(1) No(0)? Add a new player(2)");
             int n = getInt();
             if (n == 0)
                 return false;
-            if (n == 1) {
+            if (n == 1 && table.getSize() > 1) {
                 for(int i = 0; i < 20; i++)
                     System.out.println("");
                 return true;
             }
+            else if(n==1)
+                System.out.println(colorText.get(2)+"Can't continue, table is empty!"+colorText.get(0));
             if(n == 2)
                 if(table.addPlayer())
-                    System.out.println("New player added");
+                    System.out.println(colorText.get(4)+"New player added"+colorText.get(0));
                 else
-                    System.out.println("Table is full");
+                    System.out.println(colorText.get(2)+"Table is full"+colorText.get(0));
         }
     }
 

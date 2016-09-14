@@ -6,7 +6,6 @@ package player;
 public class Dealer extends Player {
 
     int nrOfRound;
-    Player player;
 
     public Dealer(int nrRound, int i){
         super(i);
