@@ -1,7 +1,6 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 import cards.Deck;
 import  player.Player;
@@ -13,7 +12,6 @@ import player.Table;
  */
 
  class IOHandler {
-    Random rand = new Random();
     private Scanner reader = new Scanner(System.in);
     private ArrayList<String> colorText = new ArrayList<>();
 
@@ -75,7 +73,7 @@ import player.Table;
     }
 
     void displayDealerBust(){
-        System.out.println(colorText.get(4)+"Dealer bust, everyone wins" +colorText.get(0));
+        System.out.println(colorText.get(4)+"Dealer bust" +colorText.get(0));
     }
 
     void displayHand(Player player){
@@ -91,7 +89,7 @@ import player.Table;
     boolean continueGame(Table table){
         while(true){
             if(table.getSize() < 2){
-                System.out.println("No players left game ending...");
+                System.out.println("No players left at table game ending...");
                 return false;
             }
             System.out.println("Continue game? Yes(1) No(0)? Add a new player(2)");

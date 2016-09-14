@@ -17,8 +17,8 @@ public class Game {
     private Deck deck;
 
     public Game(){
-        deck = new Deck();
         table = new Table();
+        deck = table.getDeck();
         dealer = table.getDealer();
         IOHandler = new IOHandler();
     }
@@ -92,10 +92,9 @@ public class Game {
 
             IOHandler.displayDealer(dealer);
             checkAction();
-            table.checkCredit(); // Make sure all players have credit left, if not remove them
             dealerPlay();
             handleWinner();
-
+            table.checkCredit(); // Make sure all players have credit left, if not remove them
             if(IOHandler.continueGame(table)) //Check if game should continue
                 table.resetTable();
             else {

@@ -21,7 +21,7 @@ public class Table{
         deck = new Deck();
         dealer = new Dealer(0,0);
         firstAmountOfCards = 2;
-        startCredit = 700;
+        startCredit = 1000;
     }
 
     public void initTable(int amountOfPlayers){
@@ -42,6 +42,9 @@ public class Table{
         }
     }
 
+    public Deck getDeck(){
+        return deck;
+    }
 
     public Dealer getDealer(){
         return dealer;

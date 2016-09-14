@@ -24,6 +24,12 @@ public class Hand {
         Hand.add(card);
     }
 
+    private boolean checkRange(int i){
+        if(i > Hand.size() || i<0)
+            return false;
+        return true;
+    }
+
     public Card getCard(int i){
         if(checkRange(i))
             return Hand.get(i);
@@ -32,7 +38,7 @@ public class Hand {
 
     public Card removeCard(int i){
         if(checkRange(i))
-            return Hand.remove(i); //Remove returns element automaticlly
+            return Hand.remove(i); //Removes and returns element
         return null;
     }
 
@@ -40,11 +46,7 @@ public class Hand {
         Hand.clear();
     }
 
-    private boolean checkRange(int i){
-        if(i > Hand.size() || i<0)
-            return false;
-        return true;
-    }
+
 
     public int getCardValues(){
         /** Returns total value of all cards

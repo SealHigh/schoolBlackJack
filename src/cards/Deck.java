@@ -9,7 +9,7 @@ import java.util.Collections;
 public class Deck {
 
     Card card;
-    ArrayList<Card> CardDeck = new ArrayList<Card>();
+    ArrayList<Card> CardDeck = new ArrayList<>();
 
 
     public Deck(){
