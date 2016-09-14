@@ -78,7 +78,7 @@ public class Table{
         for (Player player: table){
             if(player.getHand().getCardValues() > dealer.getHand().getCardValues() && player.getHand().getCardValues() < 22 || dealer.getHand().getCardValues() > 21 && player.getHand().getCardValues() < 22)
                 player.setRoundWinner(true);
-            if(player.getHand().getCardValues() == dealer.getHand().getCardValues() && dealer.getHand().getCardValues()<22)
+            if(player.getHand().getCardValues() == dealer.getHand().getCardValues() && dealer.getHand().getCardValues()<22) // 21 on both is not draw, dealer wins
                 player.setRoundDraw(true);
         }
     }

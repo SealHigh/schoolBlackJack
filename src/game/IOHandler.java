@@ -57,14 +57,14 @@ import player.Table;
 
     void displayDealer(Dealer dealer){
             if(dealer.getRound() == 0) {
-                System.out.println(colorText.get(1) + "---------|Dealer|---------" + colorText.get(0));
+                System.out.println(colorText.get(6) + "---------|Dealer|---------" + colorText.get(0));
                 System.out.println("---------|Cards in hand|-------");
                 System.out.println(dealer.getHand().getCard(0).getRank() + " OF " + dealer.getHand().getCard(0).getSuit());
                 System.out.println("?");
                 dealer.addRound();
             }
             else {
-                System.out.println(colorText.get(1) + "---------|Dealer|---------" + colorText.get(0));
+                System.out.println(colorText.get(6) + "---------|Dealer|---------" + colorText.get(0));
                 System.out.println("---------|Cards in hand|-------");
                 for(int i =0; i < dealer.getHand().getNoOfCards(); i++){
                     System.out.println(dealer.getHand().getCard(i).getRank() + " OF " + dealer.getHand().getCard(i).getSuit() );
@@ -83,13 +83,13 @@ import player.Table;
         for(int i =0; i < player.getHand().getNoOfCards(); i++){
             System.out.println(player.getHand().getCard(i).getRank() + " OF " + player.getHand().getCard(i).getSuit() );
         }
-        System.out.println("Total card value: " + player.getHand().getCardValues());
+        System.out.println(colorText.get(5)+"Total card value: " + player.getHand().getCardValues()+colorText.get(0));
     }
 
     boolean continueGame(Table table){
         while(true){
             if(table.getSize() < 2){
-                System.out.println("No players left at table game ending...");
+                System.out.println("No players left at table, game ended...");
                 return false;
             }
             System.out.println("Continue game? Yes(1) No(0)? Add a new player(2)");
@@ -110,9 +110,10 @@ import player.Table;
     }
 
     void displayFinalScores(ArrayList<Player> table){
+        System.out.println(colorText.get(2) + "Table closing... "+ colorText.get(0));
         for (Player player: table) {
             if(player.getID() != 0) //Dealers score doesnt matter
-            System.out.println("Table closing... Player " + player.getID() +" final credit: " +player.getCredit() );
+            System.out.println("Player " + player.getID() +" final credit: " +player.getCredit() );
         }
     }
 
@@ -123,7 +124,10 @@ import player.Table;
             System.out.println("How much do you want to bet? (Minimum 100, Maxiumum 2000) Enter 0 to leave table");
             n = getInt();
             if (n == 0)
+            {
+                System.out.println("Player " + player.getID() + " left table with credit: " + player.getCredit());
                 return false;
+            }
             if(n>player.getCredit())
                 System.out.println("Can't bet more than you have in balance");
         }
@@ -135,7 +139,10 @@ import player.Table;
 
     boolean getAction(Player player, Deck deck) {
            while(true){
-               System.out.println("Hit(1) or stay(0)? See current credit(2)");
+               if(player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7)
+                System.out.println("Doubledown(2), Hit(1) or Stay(0)? See current credit(3)");
+               else
+                   System.out.println("Hit(1) or Stay(0)? See current credit(3)");
                 int n = getInt();
                 if (n == 0)
                     return false;
@@ -143,7 +150,21 @@ import player.Table;
                     player.getHand().addCard(deck.dealCard());
                     return true;
                 }
-                else if(n == 2){
+                else if(n == 2 && player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7){
+                    //Double down, player doubles his bets and can only draw one more card, can only be done on 7,8,9,10,11 (standard blackjack rules)
+                    if(player.getCurrentBet() < player.getCredit())
+                    {
+                        System.out.println(colorText.get(4) + "Player " + player.getID() + " is doubling down." + colorText.get(0));
+                        player.subtractCredit(player.getCurrentBet());
+                        player.setCurrentBet(player.getCurrentBet()*2);
+                        player.getHand().addCard(deck.dealCard());
+                        displayHand(player);
+                        return false;
+                    }
+                    else
+                        System.out.println(colorText.get(4)+"Player " + player.getID() + " can't doubledown, not enough credits" +colorText.get(0));
+                }
+                else if(n == 3){
                     System.out.println(colorText.get(4)+"Current balance: " + player.getCredit()+colorText.get(0));
                 }
             }
