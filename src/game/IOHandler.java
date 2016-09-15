@@ -2,10 +2,8 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import cards.Deck;
 import  player.Player;
 import  player.Dealer;
-import player.Table;
 
 /**
  * Created by Martin on 2016-09-10.
@@ -21,7 +19,7 @@ import player.Table;
             colorText.add("\u001B[3"+i+"m");
     }
 
-    public int getInt(){
+    int getInt(){
         while (!reader.hasNextInt()) {
             reader.nextLine();
             System.out.println("int, please!");
@@ -89,19 +87,19 @@ import player.Table;
     }
 
 
-    public void displayContinueQ(){
+    void displayContinueQ(){
         System.out.println("Continue game? Yes(1) No(0)? Add a new player(2)");
     }
 
-    public void displayContinueError(){
+    void displayContinueError(){
         System.out.println(colorText.get(2)+"Can't continue, table is empty!"+colorText.get(0));
     }
 
-    public void displayPlayerAddError(){
+    void displayPlayerAddError(){
         System.out.println(colorText.get(2)+"Table is full"+colorText.get(0));
     }
 
-    public void displayPlayerAdded(){
+    void displayPlayerAdded(){
         System.out.println(colorText.get(4)+"New player added"+colorText.get(0));
     }
 
@@ -114,7 +112,7 @@ import player.Table;
     }
 
 
-    public void displayBetQ(){
+    void displayBetQ(){
         System.out.println("How much do you want to bet? (Minimum 100, Maxiumum 2000) Enter 0 to leave table");
     }
 
@@ -122,28 +120,28 @@ import player.Table;
         System.out.println("Player " + player.getID() + " left table with credit: " + player.getCredit());
     }
 
-    public void displayOutOfCredit(){
+    void displayOutOfCredit(){
         System.out.println("Can't bet more than you have in balance");
     }
 
 
-    public void displayActionDDown(){
+    void displayActionDDown(){
         System.out.println("Doubledown(2), Hit(1) or Stay(0)? See current credit(3)");
     }
 
-    public void displayAction() {
+    void displayAction() {
         System.out.println("Hit(1) or Stay(0)? See current credit(3)");
     }
 
-    public void displayDoublingDown() {
+    void displayDoublingDown() {
         System.out.println("Hit(1) or Stay(0)? See current credit(3)");
     }
 
-    public void displayDDError(Player player){
+    void displayDDError(Player player){
         System.out.println(colorText.get(4)+"Player " + player.getID() + " can't doubledown, not enough credits" +colorText.get(0));
     }
 
-    public void displayCredit(Player player){
+    void displayCredit(Player player){
         System.out.println(colorText.get(4) + "Player: " + player.getID() +" current balance: " + player.getCredit()+colorText.get(0));
     }
 
