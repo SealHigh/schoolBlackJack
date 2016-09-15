@@ -116,8 +116,12 @@ import  player.Dealer;
         System.out.println("How much do you want to bet? (Minimum 100, Maxiumum 2000) Enter 0 to leave table");
     }
 
-    public void displayPlayerLeft(Player player){
-        System.out.println("Player " + player.getID() + " left table with credit: " + player.getCredit());
+    void displayPlayerKicked(Player player){
+        System.out.println(colorText.get(2)+"Player " + player.getID() + " got kicked for having less than 100 credit"+colorText.get(0));
+    }
+
+    void displayPlayerLeft(Player player){
+        System.out.println(colorText.get(2)+"Player " + player.getID() + " left table with credit: " + player.getCredit()+colorText.get(0));
     }
 
     void displayOutOfCredit(){

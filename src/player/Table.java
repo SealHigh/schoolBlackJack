@@ -65,14 +65,6 @@ public class Table{
 
     }
 
-    public void checkCredit(){
-        for (Iterator<Player> iterator = table.iterator(); iterator.hasNext();) {
-            Player player = iterator.next();
-            if (player.getCredit() < 200) {
-                iterator.remove();
-            }
-        }
-    }
 
     public void getWinners(){
         for (Player player: table){

@@ -22,7 +22,15 @@ public class Game {
     private void dealCard(Player player){
         player.getHand().addCard(table.getDeck().dealCard());
     }
-
+    public void checkCredit(){
+        for (Iterator<Player> iterator = table.getTable().iterator(); iterator.hasNext();) {
+            Player player = iterator.next();
+            if (player.getCredit() < 100) {
+                iterator.remove();
+                IOHandler.displayPlayerKicked(player);
+            }
+        }
+    }
     private void checkAction(){
         /**
          * Keeps asking player for next action until they either bust,
@@ -39,7 +47,7 @@ public class Game {
                 iterator.remove();
             }
             if(n)
-                IOHandler.displayPlayer(player);
+                IOHandler.displayPlayer(player); //Player currently plaing
             while (n) {
                 IOHandler.displayHand(player);
                 n = getAction(player);
@@ -82,7 +90,7 @@ public class Game {
             n = IOHandler.getInt();
             if (n == 0)
             {
-                IOHandler.displayCredit(player);
+                IOHandler.displayPlayerLeft(player);
                 return false;
             }
             if(n>player.getCredit())
@@ -190,7 +198,7 @@ public class Game {
             checkAction();  //Check what each player wants to do
             dealerPlay();
             handleWinner();
-            table.checkCredit(); // Make sure all players have credit left, if not remove them
+            checkCredit(); // Make sure all players have credit left, if not remove them
 
             if(handleEndOfGame()) //If we want to quit break
                 break;
