@@ -1,7 +1,5 @@
 package player;
-
 import cards.Deck;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 

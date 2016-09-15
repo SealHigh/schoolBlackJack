@@ -7,9 +7,10 @@ import java.util.Collections;
  * Created by Martin on 2016-09-09.
  */
 public class Deck {
-    ArrayList<Card> CardDeck = new ArrayList<>();
+    private ArrayList<Card> CardDeck;
 
     public Deck(){
+        CardDeck = new ArrayList<>();
         fillDeck();
     }
 
@@ -19,9 +20,7 @@ public class Deck {
     }
 
     public Card dealCard(){
-        Card card = CardDeck.get(CardDeck.size()-1);
-        CardDeck.remove(CardDeck.size()-1);
-        return card;
+        return CardDeck.remove(CardDeck.size()-1);
     }
 
     public void shuffleCards(){

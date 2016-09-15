@@ -1,7 +1,5 @@
 package game;
-import player.Dealer;
 import player.Player;
-import cards.Deck;
 import player.Table;
 
 import java.util.Iterator;
@@ -86,7 +84,7 @@ public class Game {
         IOHandler.displayCredit(player);
         int n  = 0;
         while(n<100 || n>2000 || n > player.getCredit()) {
-           IOHandler.displayBetQ();
+            IOHandler.displayBetQ();
             n = IOHandler.getInt();
             if (n == 0)
             {
@@ -109,14 +107,14 @@ public class Game {
             else
                 IOHandler.displayAction();
             int n = IOHandler.getInt();
-            if (n == 0)
+            if (n == 0) //If stay, stop asking for cards and move to next player
                 return false;
-            else if (n == 1) {
+            else if (n == 1) { //If hit add card and keep on asking for action
                 player.getHand().addCard(table.getDeck().dealCard());
                 return true;
             }
             else if(n == 2 && player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7){
-                //Double down, player doubles his bets and can only draw one more cad, can only be done on 7,8,9,10,11 (standard blackjack rules)
+                //Double down, player doubles his bets and can only draw one more card, can only be done on 7,8,9,10,11 (standard blackjack rules)
                 if(player.getCurrentBet() < player.getCredit())
                 {
                     IOHandler.displayDoublingDown();
@@ -126,7 +124,7 @@ public class Game {
                     IOHandler.displayHand(player);
                     return false;
                 }
-                else
+                else //If player don't have enough credit to DD
                     IOHandler.displayDDError(player);
             }
             else if(n == 3){
