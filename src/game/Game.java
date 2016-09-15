@@ -34,7 +34,7 @@ public class Game {
             boolean n = true;
             if (player.getID() == 0) //Dealer doesn't play
                 n = false;
-            else if (!IOHandler.getBetAction(player)) { //If player wants to leave
+            else if (!getBetAction(player)) { //If player wants to leave
                 n = false;
                 iterator.remove();
             }
@@ -42,7 +42,7 @@ public class Game {
                 IOHandler.displayPlayer(player);
             while (n) {
                 IOHandler.displayHand(player);
-                n = IOHandler.getAction(player, table.getDeck());
+                n = getAction(player);
 
                 if (player.checkLoseCondition()) { //If player busts display it and end players turn
                     IOHandler.displayHand(player);
@@ -53,6 +53,79 @@ public class Game {
         }
     }
 
+    private boolean continueGame(){
+        while(true){
+            IOHandler.displayContinueQ();
+            int n = IOHandler.getInt();
+            if (n == 0)
+                return false;
+            if (n == 1 && table.getSize() > 1) {
+                for(int i = 0; i < 20; i++)
+                    System.out.println("");
+                return true;
+            }
+            else if(n==1)
+                IOHandler.displayContinueError();
+            if(n == 2)
+                if(table.addPlayer())
+                    IOHandler.displayPlayerAdded();
+                else
+                    IOHandler.displayPlayerAddError();
+        }
+    }
+
+    private boolean getBetAction(Player player){
+        IOHandler.displayCredit(player);
+        int n  = 0;
+        while(n<100 || n>2000 || n > player.getCredit()) {
+           IOHandler.displayBetQ();
+            n = IOHandler.getInt();
+            if (n == 0)
+            {
+                IOHandler.displayCredit(player);
+                return false;
+            }
+            if(n>player.getCredit())
+                IOHandler.displayOutOfCredit();
+        }
+        player.setCurrentBet(n);
+        player.subtractCredit(n);
+        IOHandler.displayCredit(player);
+        return true;
+    }
+
+    private boolean getAction(Player player) {
+        while(true){
+            if(player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7)
+                IOHandler.displayActionDDown();
+            else
+                IOHandler.displayAction();
+            int n = IOHandler.getInt();
+            if (n == 0)
+                return false;
+            else if (n == 1) {
+                player.getHand().addCard(table.getDeck().dealCard());
+                return true;
+            }
+            else if(n == 2 && player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7){
+                //Double down, player doubles his bets and can only draw one more cad, can only be done on 7,8,9,10,11 (standard blackjack rules)
+                if(player.getCurrentBet() < player.getCredit())
+                {
+                    IOHandler.displayDoublingDown();
+                    player.subtractCredit(player.getCurrentBet());
+                    player.setCurrentBet(player.getCurrentBet()*2);
+                    player.getHand().addCard(table.getDeck().dealCard());
+                    IOHandler.displayHand(player);
+                    return false;
+                }
+                else
+                    IOHandler.displayDDError(player);
+            }
+            else if(n == 3){
+                IOHandler.displayCredit(player);
+            }
+        }
+    }
 
     private void dealerPlay(){
         /**
@@ -94,7 +167,7 @@ public class Game {
     }
 
     private boolean handleEndOfGame(){
-        if(IOHandler.continueGame(table)) //Check if game should continue
+        if(continueGame()) //Check if game should continue
             table.resetTable();
         else {
             IOHandler.displayFinalScores(table.getTable()); //Print out final credits

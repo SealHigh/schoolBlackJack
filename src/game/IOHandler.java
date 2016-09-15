@@ -21,7 +21,7 @@ import player.Table;
             colorText.add("\u001B[3"+i+"m");
     }
 
-    private int getInt(){
+    public int getInt(){
         while (!reader.hasNextInt()) {
             reader.nextLine();
             System.out.println("int, please!");
@@ -89,26 +89,20 @@ import player.Table;
     }
 
 
+    public void displayContinueQ(){
+        System.out.println("Continue game? Yes(1) No(0)? Add a new player(2)");
+    }
 
-    boolean continueGame(Table table){
-        while(true){
-            System.out.println("Continue game? Yes(1) No(0)? Add a new player(2)");
-            int n = getInt();
-            if (n == 0)
-                return false;
-            if (n == 1 && table.getSize() > 1) {
-                for(int i = 0; i < 20; i++)
-                    System.out.println("");
-                return true;
-            }
-            else if(n==1)
-                System.out.println(colorText.get(2)+"Can't continue, table is empty!"+colorText.get(0));
-            if(n == 2)
-                if(table.addPlayer())
-                    System.out.println(colorText.get(4)+"New player added"+colorText.get(0));
-                else
-                    System.out.println(colorText.get(2)+"Table is full"+colorText.get(0));
-        }
+    public void displayContinueError(){
+        System.out.println(colorText.get(2)+"Can't continue, table is empty!"+colorText.get(0));
+    }
+
+    public void displayPlayerAddError(){
+        System.out.println(colorText.get(2)+"Table is full"+colorText.get(0));
+    }
+
+    public void displayPlayerAdded(){
+        System.out.println(colorText.get(4)+"New player added"+colorText.get(0));
     }
 
     void displayFinalScores(ArrayList<Player> table){
@@ -119,56 +113,38 @@ import player.Table;
         }
     }
 
-    boolean getBetAction(Player player){
-        System.out.println(colorText.get(4) + "Player: " + player.getID() +" current balance: " + player.getCredit()+colorText.get(0));
-        int n  = 0;
-        while(n<100 || n>2000 || n > player.getCredit()) {
-            System.out.println("How much do you want to bet? (Minimum 100, Maxiumum 2000) Enter 0 to leave table");
-            n = getInt();
-            if (n == 0)
-            {
-                System.out.println("Player " + player.getID() + " left table with credit: " + player.getCredit());
-                return false;
-            }
-            if(n>player.getCredit())
-                System.out.println("Can't bet more than you have in balance");
-        }
-        player.setCurrentBet(n);
-        player.subtractCredit(n);
-        System.out.println(colorText.get(4)+"Current balance: " + player.getCredit()+colorText.get(0));
-        return true;
+
+    public void displayBetQ(){
+        System.out.println("How much do you want to bet? (Minimum 100, Maxiumum 2000) Enter 0 to leave table");
     }
 
-    boolean getAction(Player player, Deck deck) {
-           while(true){
-               if(player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7)
-                System.out.println("Doubledown(2), Hit(1) or Stay(0)? See current credit(3)");
-               else
-                   System.out.println("Hit(1) or Stay(0)? See current credit(3)");
-                int n = getInt();
-                if (n == 0)
-                    return false;
-                else if (n == 1) {
-                    player.getHand().addCard(deck.dealCard());
-                    return true;
-                }
-                else if(n == 2 && player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7){
-                    //Double down, player doubles his bets and can only draw one more card, can only be done on 7,8,9,10,11 (standard blackjack rules)
-                    if(player.getCurrentBet() < player.getCredit())
-                    {
-                        System.out.println(colorText.get(4) + "Player " + player.getID() + " is doubling down." + colorText.get(0));
-                        player.subtractCredit(player.getCurrentBet());
-                        player.setCurrentBet(player.getCurrentBet()*2);
-                        player.getHand().addCard(deck.dealCard());
-                        displayHand(player);
-                        return false;
-                    }
-                    else
-                        System.out.println(colorText.get(4)+"Player " + player.getID() + " can't doubledown, not enough credits" +colorText.get(0));
-                }
-                else if(n == 3){
-                    System.out.println(colorText.get(4)+"Current balance: " + player.getCredit()+colorText.get(0));
-                }
-            }
-        }
+    public void displayPlayerLeft(Player player){
+        System.out.println("Player " + player.getID() + " left table with credit: " + player.getCredit());
+    }
+
+    public void displayOutOfCredit(){
+        System.out.println("Can't bet more than you have in balance");
+    }
+
+
+    public void displayActionDDown(){
+        System.out.println("Doubledown(2), Hit(1) or Stay(0)? See current credit(3)");
+    }
+
+    public void displayAction() {
+        System.out.println("Hit(1) or Stay(0)? See current credit(3)");
+    }
+
+    public void displayDoublingDown() {
+        System.out.println("Hit(1) or Stay(0)? See current credit(3)");
+    }
+
+    public void displayDDError(Player player){
+        System.out.println(colorText.get(4)+"Player " + player.getID() + " can't doubledown, not enough credits" +colorText.get(0));
+    }
+
+    public void displayCredit(Player player){
+        System.out.println(colorText.get(4) + "Player: " + player.getID() +" current balance: " + player.getCredit()+colorText.get(0));
+    }
+
 }
