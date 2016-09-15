@@ -38,6 +38,8 @@ public class Game {
                 n = false;
                 iterator.remove();
             }
+            if(n)
+                IOHandler.displayPlayer(player);
             while (n) {
                 IOHandler.displayHand(player);
                 n = IOHandler.getAction(player, table.getDeck());
@@ -50,6 +52,7 @@ public class Game {
             }
         }
     }
+
 
     private void dealerPlay(){
         /**

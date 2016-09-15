@@ -76,9 +76,11 @@ import player.Table;
         System.out.println(colorText.get(4)+"Dealer bust" +colorText.get(0));
     }
 
-    void displayHand(Player player){
-
+    void displayPlayer (Player player){
         System.out.println(colorText.get(7)+ "---------|Player "+player.getID()+ "|---------"+colorText.get(0));
+    }
+
+    void displayHand(Player player){
         System.out.println("---------|Cards in hand|-------");
         for(int i =0; i < player.getHand().getNoOfCards(); i++){
             System.out.println(player.getHand().getCard(i).getRank() + " OF " + player.getHand().getCard(i).getSuit() );
@@ -113,7 +115,7 @@ import player.Table;
         System.out.println(colorText.get(2) + "Table closing... "+ colorText.get(0));
         for (Player player: table) {
             if(player.getID() != 0) //Dealers score doesnt matter
-            System.out.println("Player " + player.getID() +" final credit: " +player.getCredit() );
+                System.out.println("Player " + player.getID() +" final credit: " +player.getCredit() );
         }
     }
 
