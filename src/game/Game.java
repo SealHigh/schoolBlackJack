@@ -14,7 +14,6 @@ public class Game {
     private IOHandler IOHandler;
     private Table table;
 
-
     public Game(){
         table = new Table();
         IOHandler = new IOHandler();
@@ -23,7 +22,6 @@ public class Game {
     private void dealCard(Player player){
         player.getHand().addCard(table.getDeck().dealCard());
     }
-
 
     private void checkAction(){
         /**
@@ -53,7 +51,6 @@ public class Game {
         }
     }
 
-
     private void dealerPlay(){
         /**
          * Dealer draws card until he has 17 or more
@@ -67,7 +64,6 @@ public class Game {
             }
         }
     }
-
 
     private void handleWinner(){
         /**
