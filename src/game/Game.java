@@ -1,4 +1,5 @@
 package game;
+import exceptions.NoSuchCardException;
 import player.Player;
 import player.Table;
 
@@ -17,8 +18,18 @@ public class Game {
         IOHandler = new IOHandler();
     }
 
+
+
     private void dealCard(Player player){
-        player.getHand().addCard(table.getDeck().dealCard());
+        try {
+            player.getHand().addCard(table.getDeck().dealCard());
+        }
+        catch (NoSuchCardException NS){
+            System.out.println(NS.getMessage());
+            table.getDeck().fillDeck();
+            table.getDeck().shuffleCards();
+            player.getHand().addCard(table.getDeck().dealCard());
+        }
     }
     public void checkCredit(){
         for (Iterator<Player> iterator = table.getTable().iterator(); iterator.hasNext();) {
@@ -110,7 +121,7 @@ public class Game {
             if (n == 0) //If stay, stop asking for cards and move to next player
                 return false;
             else if (n == 1) { //If hit add card and keep on asking for action
-                player.getHand().addCard(table.getDeck().dealCard());
+                    dealCard(player);
                 return true;
             }
             else if(n == 2 && player.getHand().getCardValues() <12 && player.getHand().getCardValues() >7){
@@ -120,7 +131,7 @@ public class Game {
                     IOHandler.displayDoublingDown();
                     player.subtractCredit(player.getCurrentBet());
                     player.setCurrentBet(player.getCurrentBet()*2);
-                    player.getHand().addCard(table.getDeck().dealCard());
+                    dealCard(player);
                     IOHandler.displayHand(player);
                     return false;
                 }

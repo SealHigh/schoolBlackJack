@@ -2,6 +2,8 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import exceptions.NoSuchCardException;
 import  player.Player;
 import  player.Dealer;
 
@@ -81,7 +83,12 @@ import  player.Dealer;
     void displayHand(Player player){
         System.out.println("---------|Cards in hand|-------");
         for(int i =0; i < player.getHand().getNoOfCards(); i++){
-            System.out.println(player.getHand().getCard(i).getRank() + " OF " + player.getHand().getCard(i).getSuit() );
+            try {
+                System.out.println(player.getHand().getCard(10).getRank() + " OF " + player.getHand().getCard(i).getSuit());
+            }
+            catch (NoSuchCardException NS){
+                System.out.println(NS.getMessage());
+            }
         }
         System.out.println(colorText.get(5)+"Total card value: " + player.getHand().getCardValues()+colorText.get(0));
     }

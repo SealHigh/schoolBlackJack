@@ -1,5 +1,7 @@
 package player;
 import cards.Deck;
+import exceptions.NoSuchCardException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -32,7 +34,15 @@ public class Table{
         for (Player player: table)
         {
             for(int i = 0; i <firstAmountOfCards; i++)
-                player.getHand().addCard(deck.dealCard());
+                try {
+                    player.getHand().addCard(deck.dealCard());
+                }
+                catch (NoSuchCardException NS){
+                    System.out.println(NS.getMessage());
+                    deck.fillDeck();
+                    deck.shuffleCards();
+                    player.getHand().addCard(deck.dealCard());
+                }
         }
         for (Player player: table)
         {

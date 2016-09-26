@@ -1,5 +1,7 @@
 package cards;
 
+import exceptions.NoSuchCardException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,6 +14,7 @@ public class Deck {
     public Deck(){
         CardDeck = new ArrayList<>();
         fillDeck();
+        CardDeck.clear();
     }
 
 
@@ -19,7 +22,9 @@ public class Deck {
         return CardDeck.size();
     }
 
-    public Card dealCard(){
+    public Card dealCard() throws NoSuchCardException{
+        if(CardDeck.size() < 1)
+            throw new NoSuchCardException("Deck is out of cards");
         return CardDeck.remove(CardDeck.size()-1);
     }
 
@@ -34,7 +39,6 @@ public class Deck {
                 Card card = new Card(rank, suit);
                 CardDeck.add(card);
             }
-
-    }
+        }
 }
 

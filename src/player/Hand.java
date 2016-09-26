@@ -1,6 +1,7 @@
 package player;
 
 import  cards.*;
+import exceptions.NoSuchCardException;
 import player.Player;
 
 import java.util.ArrayList;
@@ -30,10 +31,10 @@ public class Hand {
         return true;
     }
 
-    public Card getCard(int i){
-        if(checkRange(i))
-            return Hand.get(i);
-        return null;
+    public Card getCard(int i)throws NoSuchCardException {
+        if(i > Hand.size() || i<0)
+            throw new NoSuchCardException( i + " is not within hands range of: 0-" + (Hand.size()-1));
+        return Hand.get(i);
     }
 
     public Card removeCard(int i){
