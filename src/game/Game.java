@@ -29,6 +29,7 @@ public class Game {
             table.getDeck().fillDeck();
             table.getDeck().shuffleCards();
             player.getHand().addCard(table.getDeck().dealCard());
+            System.out.println("Filled deck with new cards");
         }
     }
     public void checkCredit(){

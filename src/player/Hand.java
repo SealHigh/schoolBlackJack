@@ -1,10 +1,14 @@
 package player;
 
+import Comparators.SortByRank;
+import Comparators.SortBySuit;
 import  cards.*;
 import exceptions.NoSuchCardException;
 import player.Player;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by Martin on 2016-09-10.
@@ -23,6 +27,8 @@ public class Hand {
 
     public void addCard(Card card){
         Hand.add(card);
+        //Collections.sort(Hand, new SortByRank());
+        Collections.sort(Hand, new SortBySuit());
     }
 
     private boolean checkRange(int i){
@@ -48,14 +54,14 @@ public class Hand {
     }
 
 
-
+    /** Returns total value of all cards
+     * and handles any aces in the hand.
+     * Since ace can be both 11 and 1 it
+     * makes sure that the optimal value
+     * is used.
+     */
     public int getCardValues(){
-        /** Returns total value of all cards
-         * and handles any aces in the hand.
-         * Since ace can be both 11 and 1 it
-         * makes sure that the optimal value
-         * is used.
-         */
+
 
         int totalValue = 0;
         ArrayList<Card> listOfAce = new ArrayList<>();

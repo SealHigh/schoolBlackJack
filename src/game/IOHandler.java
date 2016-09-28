@@ -29,6 +29,19 @@ import  player.Dealer;
         return reader.nextInt();
     }
 
+    void displayHand(Player player){
+        System.out.println("---------|Cards in hand|-------");
+        for(int i =0; i < player.getHand().getNoOfCards(); i++){
+            try {
+                System.out.println(player.getHand().getCard(i).getRank() + " OF " + player.getHand().getCard(i).getSuit()); // change i to any number over 2
+            }
+            catch (NoSuchCardException NS){
+                System.out.println(NS.getMessage());
+            }
+        }
+        System.out.println(colorText.get(5)+"Total card value: " + player.getHand().getCardValues()+colorText.get(0));
+    }
+
     int getNoPlayers(){
         int n = 0;
         while(n <1) {
@@ -80,18 +93,6 @@ import  player.Dealer;
         System.out.println(colorText.get(7)+ "---------|Player "+player.getID()+ "|---------"+colorText.get(0));
     }
 
-    void displayHand(Player player){
-        System.out.println("---------|Cards in hand|-------");
-        for(int i =0; i < player.getHand().getNoOfCards(); i++){
-            try {
-                System.out.println(player.getHand().getCard(10).getRank() + " OF " + player.getHand().getCard(i).getSuit());
-            }
-            catch (NoSuchCardException NS){
-                System.out.println(NS.getMessage());
-            }
-        }
-        System.out.println(colorText.get(5)+"Total card value: " + player.getHand().getCardValues()+colorText.get(0));
-    }
 
 
     void displayContinueQ(){

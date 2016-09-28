@@ -40,5 +40,6 @@ public class Deck {
                 CardDeck.add(card);
             }
         }
+
 }
 
