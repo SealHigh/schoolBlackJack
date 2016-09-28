@@ -41,7 +41,9 @@ public class Table{
                     System.out.println(NS.getMessage());
                     deck.fillDeck();
                     deck.shuffleCards();
+                    System.out.println("Filled deck with new cards");
                     player.getHand().addCard(deck.dealCard());
+
                 }
         }
         for (Player player: table)

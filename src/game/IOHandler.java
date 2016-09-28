@@ -36,7 +36,7 @@ import  player.Dealer;
                 System.out.println(player.getHand().getCard(i).getRank() + " OF " + player.getHand().getCard(i).getSuit()); // change i to any number over 2
             }
             catch (NoSuchCardException NS){
-                System.out.println(NS.getMessage());
+                //System.out.println(NS.getMessage());
             }
         }
         System.out.println(colorText.get(5)+"Total card value: " + player.getHand().getCardValues()+colorText.get(0));
