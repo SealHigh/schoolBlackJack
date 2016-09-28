@@ -24,7 +24,7 @@ public class Deck {
 
     public Card dealCard() throws NoSuchCardException{
         if(CardDeck.size() < 1)
-            throw new NoSuchCardException("Deck is out of cards");
+            throw new NoSuchCardException("Deck is out of cards!");
         return CardDeck.remove(CardDeck.size()-1);
     }
 
